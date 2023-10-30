@@ -16,7 +16,7 @@ public class Maze {
     boolean loadMaze(String fname)
     {
         int rowcnt = 0;
-        Scanner scan;
+        Scanner scan, linescan;
         try {
             File textfile = new File(fname);
             scan = new Scanner(textfile);
@@ -39,7 +39,7 @@ public class Maze {
         while (scan.hasNext())
         {
             String currLine = scan.nextLine();
-            Scanner linescan = new Scanner(currLine);
+            linescan = new Scanner(currLine);
             int colcnt = 0;
             while(linescan.hasNext())
             {
@@ -67,9 +67,9 @@ public class Maze {
         if (currCol + 1 < numRows)
             neighbors.add(maze[currRow][currCol + 1]);
         if (currRow + 1 < numCols)
-            neighbors.add(maze[currRow][currCol + 1]);
+            neighbors.add(maze[currRow + 1][currCol]);
         if (currCol - 1 >= 0)
-            neighbors.add(maze[currRow][currCol + 1]);
+            neighbors.add(maze[currRow][currCol - 1]);
         return neighbors;
     }
 
@@ -85,11 +85,27 @@ public class Maze {
 
     public void reset()
     {
-
+        for (int i = 0; i < maze.length; i++)
+        {
+            for (int k = 0; k < maze[i].length; k++)
+            {
+                maze[i][k].reset();
+            }
+           
+        }
     }
 
     public String toString()
     {
-
+        String mazeString = "";
+        for (int i = 0; i < maze.length; i++)
+        {
+            for (int k = 0; k < maze[i].length; k++)
+            {
+                mazeString = mazeString + maze[i][k];
+            }
+            mazeString = mazeString + "\n";
+        }
+        return mazeString;
     }
 }

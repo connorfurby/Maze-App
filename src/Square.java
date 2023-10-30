@@ -45,4 +45,16 @@ public class Square {
         String strtype = "" + chartype;
         return strtype;
     }
+
+    public void reset()
+    {
+        if (inttype == 0)
+            chartype = '_';
+        else if (inttype == 1)
+            chartype = '#';
+        else if (inttype == 2)
+            chartype = 'S';
+        else
+            chartype = 'E';
+    }
 }
