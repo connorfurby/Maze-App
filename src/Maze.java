@@ -29,7 +29,6 @@ public class Maze {
         }
         numRows = scan.nextInt();
         numCols = scan.nextInt();
-        System.out.println("" + numRows + " " + numCols);
 
         this.maze = new Square[numRows][numCols];
 
