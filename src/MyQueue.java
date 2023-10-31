@@ -18,19 +18,18 @@ public class MyQueue implements QueueADT{
 
     public void enqueue(Object element)
     {
+        Node newNode = new Node();
+        newNode.data = element;
+
         if(this.isEmpty())
         {
-            Node newNode = new Node();
-            newNode.data = element;
             this.first = newNode;
-            this.last = newNode;
+            //this.last = newNode;
         }
         else
-        {
-            Node newNode = new Node();
-            newNode.data = element;
             this.last.next = newNode;
-        }
+            
+        this.last = newNode;
         this.size++;  
     }
 
