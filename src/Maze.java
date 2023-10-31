@@ -1,4 +1,3 @@
-import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
@@ -10,58 +9,69 @@ public class Maze {
     private Square start, finish;
     public Maze()
     {
-
+        System.out.print("");
     }
+
+
 
     boolean loadMaze(String fname)
     {
-        int rowcnt = 0;
         Scanner scan, linescan;
-        try {
+        try 
+        {
             File textfile = new File(fname);
             scan = new Scanner(textfile);
+            
         }
-        catch (FileNotFoundException e) {
+        catch (FileNotFoundException e) 
+        {
             return false;
         }
+        numRows = scan.nextInt();
+        numCols = scan.nextInt();
+        System.out.println("" + numRows + " " + numCols);
+
         this.maze = new Square[numRows][numCols];
-        numRows = 0;
-        numCols = 0;
+
         for (int row=0; row < numRows; row++) 
         {
             for (int col=0; col < numCols; col++)
             {
                 maze[row][col] = null;
-                numCols++;
             }
-            numRows++;
         }
+
+        int colcnt = 0;
+        int rowcnt = 0;
         while (scan.hasNext())
         {
-            String currLine = scan.nextLine();
-            linescan = new Scanner(currLine);
-            int colcnt = 0;
-            while(linescan.hasNext())
-            {
-                int currType = linescan.nextInt();
-                maze[rowcnt][colcnt] = new Square(rowcnt, colcnt, currType);
-                if (currType == 2)
+            int currType = scan.nextInt();
+            maze[rowcnt][colcnt] = new Square(rowcnt, colcnt, currType);
+            if (currType == 2)
                     start = maze[rowcnt][colcnt];
-                if (currType == 3)
+            if (currType == 3)
                     finish = maze[rowcnt][colcnt];
-                colcnt++;
+            colcnt++;
+            if (colcnt >= numCols)
+            {
+                rowcnt++;
+                colcnt = 0;
             }
-            rowcnt++;
         }
+
         scan.close();
         return true;
     }
     
+    
+
+
     public ArrayList<Square> getNeighbors(Square sq)
     {
         int currRow = sq.getRow();
         int currCol = sq.getCol();
         ArrayList<Square> neighbors = new ArrayList<>();
+
         if (currRow - 1 >= 0)
             neighbors.add(maze[currRow - 1][currCol]);
         if (currCol + 1 < numRows)
@@ -70,8 +80,11 @@ public class Maze {
             neighbors.add(maze[currRow + 1][currCol]);
         if (currCol - 1 >= 0)
             neighbors.add(maze[currRow][currCol - 1]);
+    
         return neighbors;
     }
+
+
 
     public Square getStart()
     {
@@ -82,6 +95,8 @@ public class Maze {
     {
         return finish;
     }
+
+
 
     public void reset()
     {
@@ -95,9 +110,12 @@ public class Maze {
         }
     }
 
+
+
     public String toString()
     {
         String mazeString = "";
+
         for (int i = 0; i < maze.length; i++)
         {
             for (int k = 0; k < maze[i].length; k++)
@@ -106,6 +124,7 @@ public class Maze {
             }
             mazeString = mazeString + "\n";
         }
+
         return mazeString;
     }
 }
