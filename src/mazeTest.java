@@ -3,7 +3,7 @@ public class mazeTest {
     {
         Square testSq = new Square(1, 1, 0);
         Maze testMaze = new Maze();
-        testMaze.loadMaze("src/maze-1");
+        testMaze.loadMaze("src/maze-2");
         
         System.out.println(testMaze.getNeighbors(testSq));
         System.out.println("Start Position: " + testMaze.getStart().getRow() + ", " + testMaze.getStart().getCol());
