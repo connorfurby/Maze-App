@@ -2,6 +2,7 @@ public class Square {
    
     private int row, col, inttype;
     private char chartype;
+    private boolean explored;
     // types
     // 0 = empty space
     // 1 = wall
@@ -13,6 +14,7 @@ public class Square {
         row = r;
         col = c; 
         inttype = t;
+        explored = false;
         if (inttype == 0)
             chartype = '_';
             // if tree for 
@@ -40,6 +42,15 @@ public class Square {
         return inttype;
     }
 
+    public boolean isExplored()
+    {
+        return explored;
+    }
+
+    public void setExplored()
+    {
+        explored = true;
+    }
     public String toString()
     {
         String strtype = "" + chartype;
