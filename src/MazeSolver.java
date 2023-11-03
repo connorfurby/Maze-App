@@ -13,6 +13,7 @@ public abstract class MazeSolver {
    public MazeSolver(Maze maze)
     {
         theMaze = maze;
+        theMaze.loadMaze("src/maze-1");
         this.makeEmpty();
         this.add(theMaze.getStart());
     }
@@ -68,7 +69,7 @@ public abstract class MazeSolver {
                 if (!(nextsq.isExplored()))
                 {
                     nextsq.setExplored();
-                    worklist.add(nextsq);
+                    this.add(nextsq);
                     return nextsq;
                 }
             }

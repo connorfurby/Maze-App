@@ -16,7 +16,7 @@ public class Maze {
 
     boolean loadMaze(String fname)
     {
-        Scanner scan, linescan;
+        Scanner scan;
         try 
         {
             File textfile = new File(fname);
