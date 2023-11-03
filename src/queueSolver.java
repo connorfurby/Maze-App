@@ -1,28 +1,36 @@
-import java.util.*;
+//import java.util.*;
 
 public class queueSolver extends MazeSolver{
     
-    public queueSolver(Maze maze) {
+    public MyQueue <Square> queue = new MyQueue<>();
+    //static Maze maze  = new Maze();
+
+    public queueSolver(Maze maze) 
+    {
         super(maze);
-        //TODO Auto-generated constructor stub
     }
 
-    MyQueue <Square> queue = new MyQueue();
-    
     public void makeEmpty()
     {
-
+        while(!(queue.isEmpty()))
+            queue.dequeue();
     }
+
     public boolean isEmpty()
     {
-
+        if(queue.isEmpty())
+            return true;
+        
+        return false;
     }
+
     public void add(Square sq)
     {
-
+        queue.enqueue(sq);
     }
+
     public Square next()
     {
-        
+        return super.step();
     }
 }
