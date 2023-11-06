@@ -2,52 +2,47 @@ import java.util.*;
 
 public abstract class MazeSolver {
 
+    protected static Stack<Square> currPath; // THE PATH THE SOLVER TAKES TO THE FINISH
+    protected boolean traversed = false; // BECOMES TRUE ONCE THE ENTIRE MAZE HAS BEEN TRAVERSED OR THE FINISH HAS BEEN FOUND
+    protected static Maze theMaze; // MAZE THAT IS BEING SOLVED
+
+   public MazeSolver(Maze maze)
+    {
+        theMaze = maze;
+    }
+
+
+    //ABSTRACT METHODS
     abstract void makeEmpty();
     abstract boolean isEmpty();
     abstract void add(Square sq);
     abstract Square next();
 
-    protected Maze theMaze;
-    private LinkedList<Square> worklist = new LinkedList<>();
-
-   public MazeSolver(Maze maze)
-    {
-        theMaze = maze;
-        theMaze.loadMaze("src/maze-1");
-        this.makeEmpty();
-        this.add(theMaze.getStart());
-    }
-
-
 
     public boolean isSolved()
     {
-        for (int i = 0; i < worklist.size(); i++)
-        {
-            if (worklist.get(i).getType() == 3)
-                return true;
-        }
-        if (worklist.isEmpty())
-            return true;
-        return false;
+        return traversed;
     }
 
-
-
+    //RETURNS A STRING WITH THE COORDINATES OF EVERY SQUARE ALONG THE PATH
     public String getPath()
     {
         String path = "";
         if (isSolved())
         {
-            if (worklist.isEmpty())
+            if (isEmpty())
                 return "This maze is unsolvable.";
             else 
-                for (int i = 0; i < worklist.size(); i++)
+            {
+                Square backtracked = theMaze.getFinish();
+                while (!(backtracked.getRow() == theMaze.getStart().getRow() && backtracked.getCol() == theMaze.getStart().getCol() && backtracked.getType() == theMaze.getStart().getType()))
                 {
-                    int xcord = worklist.get(i).getRow();
-                    int ycord = worklist.get(i).getCol();
+                    int xcord = backtracked.getRow();
+                    int ycord = backtracked.getCol();
                     path = path + "[" + xcord + "," + ycord + "], ";
+                    backtracked = backtracked.getPrevious();
                 }
+            }
         }
         else
             return "This Maze has not been solved yet.";
@@ -57,31 +52,41 @@ public abstract class MazeSolver {
 
 
 
+    //MOVES FORWARD A SQUARE
     public Square step()
     {
-        Square currsq = worklist.get(0);
-        Square nextsq = null;
-        if (theMaze.getNeighbors(currsq).size() > 0)
+        if (isEmpty())
         {
-            for (int i = 0; i < theMaze.getNeighbors(currsq).size(); i++)
-            {
-                nextsq = theMaze.getNeighbors(currsq).get(i);
-                if (!(nextsq.isExplored()))
-                {
-                    nextsq.setExplored();
-                    this.add(nextsq);
-                    return nextsq;
-                }
-            }
+            traversed = true;
+            return null;
         }
-        return null;
+        else
+        {
+            Square move = next();
+            if (move.getType() == 3)
+                traversed = true;
+            else 
+            {
+                ArrayList<Square> borders = theMaze.getNeighbors(move);
+                for (int i = 0; i < borders.size(); i++)
+                {
+                    if (borders.get(i).getType() != 1)
+                    {
+                        add(borders.get(i));
+                        borders.get(i).setPrevious(move);
+                    }
+                }
+                move.setExplored();
+            }
+            return move;
+        }
     }
 
 
-    
+    //RUNS UNTIL IS SOLVED BECOMES TRUE
     public void solve()
     {
-        while ((!(worklist.isEmpty())) &&  worklist.get(worklist.size() - 1).getType() != 3)
+        while (!isSolved()) 
         {
             step();
         }
