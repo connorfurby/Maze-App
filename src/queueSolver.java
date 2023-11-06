@@ -31,6 +31,7 @@ public class queueSolver extends MazeSolver{
 
     public Square next()
     {
-        return super.step();
+        //return super.step();
+        return (Square)queue.front();
     }
 }
