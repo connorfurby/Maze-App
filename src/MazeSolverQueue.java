@@ -1,18 +1,20 @@
-public class MazeSolverStack extends MazeSolver 
-{
-    static MyStack<Square> worklist;
+//import java.util.*;
 
-    public MazeSolverStack(Maze maze)
+public class MazeSolverQueue extends MazeSolver{
+    
+    static MyQueue<Square> worklist;
+
+    public MazeSolverQueue(Maze maze) 
     {
         super(maze);
         makeEmpty();
         maze.getStart().setPrevious(null);
         add(maze.getStart());
     }
-    
+
     public void makeEmpty()
     {
-       worklist = new MyStack<>();
+        worklist = new MyQueue<>();
     }
 
     public boolean isEmpty()
@@ -22,11 +24,11 @@ public class MazeSolverStack extends MazeSolver
 
     public void add(Square sq)
     {
-        worklist.push(sq);
-    }
-    public Square next()
-    {
-        return ((Square) worklist.pop());
+        worklist.enqueue(sq);
     }
 
+    public Square next()
+    {
+        return ((Square) worklist.dequeue());
+    }
 }

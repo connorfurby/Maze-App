@@ -9,7 +9,8 @@ public class Maze {
     private Square start, finish;
     public Maze()
     {
-        System.out.print("");
+        numRows = 0;
+        numCols = 0;
     }
 
 
