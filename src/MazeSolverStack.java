@@ -15,7 +15,7 @@ public class MazeSolverStack extends MazeSolver
 
     public boolean isEmpty()
     {
-        return true;
+        return stack.isEmpty();
     }
 
     public void add(Square sq)
@@ -24,7 +24,7 @@ public class MazeSolverStack extends MazeSolver
     }
     public Square next()
     {
-        return new Square(1, 2, 3);
+        return ((Square) stack.top());
     }
 
 }
