@@ -2,6 +2,7 @@ public class Square {
    
     private int row, col, inttype;
     private char chartype;
+    private Square previous;
     private boolean explored;
     // types
     // 0 = empty space
@@ -11,17 +12,12 @@ public class Square {
 
     public Square(int r, int c, int t)
     {
-        row = r;
-        col = c; 
-        inttype = t;
-        explored = false;
+        this.row = r;
+        this.col = c; 
+        this.inttype = t;
+        this.explored = false;
         if (inttype == 0)
             chartype = '_';
-            // if tree for 
-            // o - is on the solver work list
-            // . - has been explored
-            // x - is on the final path to the exit
-
         else if (inttype == 1)
             chartype = '#';
         else if (inttype == 2)
@@ -51,6 +47,17 @@ public class Square {
     {
         explored = true;
     }
+
+    public void setPrevious(Square sq) 
+    {
+        previous = sq;
+    }
+
+    public Square getPrevious() 
+    {
+        return previous;
+    }
+
     public String toString()
     {
         String strtype = "" + chartype;
