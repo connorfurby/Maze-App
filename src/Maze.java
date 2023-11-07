@@ -30,35 +30,20 @@ public class Maze {
         }
         numRows = scan.nextInt();
         numCols = scan.nextInt();
-
-        this.maze = new Square[numRows][numCols];
+        maze = new Square[numRows][numCols];
 
         for (int row=0; row < numRows; row++) 
         {
             for (int col=0; col < numCols; col++)
             {
-                maze[row][col] = null;
+                int currType = scan.nextInt();
+                maze[row][col] = new Square(row, col, currType);
+                if (currType == 2)
+                    start = maze[row][col];
+                if (currType == 3)
+                    finish = maze[row][col];
             }
         }
-
-        int colcnt = 0;
-        int rowcnt = 0;
-        while (scan.hasNext())
-        {
-            int currType = scan.nextInt();
-            maze[rowcnt][colcnt] = new Square(rowcnt, colcnt, currType);
-            if (currType == 2)
-                    start = maze[rowcnt][colcnt];
-            if (currType == 3)
-                    finish = maze[rowcnt][colcnt];
-            colcnt++;
-            if (colcnt >= numCols)
-            {
-                rowcnt++;
-                colcnt = 0;
-            }
-        }
-
         scan.close();
         return true;
     }
@@ -72,15 +57,14 @@ public class Maze {
         int currCol = sq.getCol();
         ArrayList<Square> neighbors = new ArrayList<>();
 
-        if (currRow - 1 >= 0)
+        if (maze[currRow - 1][currCol] != null && currRow - 1 >= 0 )
             neighbors.add(maze[currRow - 1][currCol]);
-        if (currCol + 1 < numRows)
+        if (maze[currRow][currCol + 1] != null && currCol + 1 < numRows)
             neighbors.add(maze[currRow][currCol + 1]);
-        if (currRow + 1 < numCols)
+        if (maze[currRow + 1][currCol] != null && currRow + 1 < numCols)
             neighbors.add(maze[currRow + 1][currCol]);
-        if (currCol - 1 >= 0)
+        if (maze[currRow][currCol - 1] != null && currCol - 1 >= 0)
             neighbors.add(maze[currRow][currCol - 1]);
-    
         return neighbors;
     }
 
@@ -100,9 +84,9 @@ public class Maze {
 
     public void reset()
     {
-        for (int i = 0; i < maze.length; i++)
+        for (int i = 0; i < numRows; i++)
         {
-            for (int k = 0; k < maze[i].length; k++)
+            for (int k = 0; k < numCols; k++)
             {
                 maze[i][k].reset();
             }

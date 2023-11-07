@@ -1,6 +1,7 @@
 import java.util.NoSuchElementException;
 
-public class MyQueue<T> implements QueueADT{
+public class MyQueue<T> implements QueueADT 
+{
     private Node first;
     private Node last;
     private int size;

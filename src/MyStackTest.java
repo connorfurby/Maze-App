@@ -2,7 +2,7 @@ public class MyStackTest
 {
     public static void main(String[] args)
     {
-        MyStack stack = new MyStack();
+        MyStack<Integer> stack = new MyStack<>();
         stack.push(1); // adds element 1 to stack
         stack.push(2); // adds element 2 to stack
         System.out.println(stack.size()); // prints size (2)
