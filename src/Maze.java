@@ -59,22 +59,22 @@ public class Maze {
 
         if (currRow - 1 >= 0)
         {
-            if(maze[currRow - 1][currCol] != null)
+            if(maze[currRow - 1][currCol] != null && !(maze[currRow - 1][currCol].isExplored()))
                 neighbors.add(maze[currRow - 1][currCol]);
         }
         if (currCol + 1 < numCols)
         {
-            if (maze[currRow][currCol + 1] != null)
+            if (maze[currRow][currCol + 1] != null && !(maze[currRow][currCol + 1].isExplored()))
                 neighbors.add(maze[currRow][currCol + 1]);
         }
         if (currRow + 1 < numRows)
         {
-            if(maze[currRow + 1][currCol] != null)
+            if(maze[currRow + 1][currCol] != null && !(maze[currRow + 1][currCol].isExplored()))
                 neighbors.add(maze[currRow + 1][currCol]);
         }
         if (currCol - 1 >= 0)
         {
-            if(maze[currRow][currCol - 1] != null)
+            if(maze[currRow][currCol - 1] != null && !(maze[currRow][currCol - 1].isExplored()))
                 neighbors.add(maze[currRow][currCol - 1]);
         }
         if (neighbors.isEmpty())
