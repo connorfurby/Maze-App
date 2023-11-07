@@ -63,7 +63,11 @@ public class Square {
         String strtype = "" + chartype;
         return strtype;
     }
-
+    
+    public void setCharType(char c)
+    {
+        chartype = c;
+    }
     public void reset()
     {
         if (inttype == 0)

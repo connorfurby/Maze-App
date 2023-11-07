@@ -57,14 +57,28 @@ public class Maze {
         int currCol = sq.getCol();
         ArrayList<Square> neighbors = new ArrayList<>();
 
-        if (maze[currRow - 1][currCol] != null && currRow - 1 >= 0 )
-            neighbors.add(maze[currRow - 1][currCol]);
-        if (maze[currRow][currCol + 1] != null && currCol + 1 < numRows)
-            neighbors.add(maze[currRow][currCol + 1]);
-        if (maze[currRow + 1][currCol] != null && currRow + 1 < numCols)
-            neighbors.add(maze[currRow + 1][currCol]);
-        if (maze[currRow][currCol - 1] != null && currCol - 1 >= 0)
-            neighbors.add(maze[currRow][currCol - 1]);
+        if (currRow - 1 >= 0)
+        {
+            if(maze[currRow - 1][currCol] != null)
+                neighbors.add(maze[currRow - 1][currCol]);
+        }
+        if (currCol + 1 < numCols)
+        {
+            if (maze[currRow][currCol + 1] != null)
+                neighbors.add(maze[currRow][currCol + 1]);
+        }
+        if (currRow + 1 < numRows)
+        {
+            if(maze[currRow + 1][currCol] != null)
+                neighbors.add(maze[currRow + 1][currCol]);
+        }
+        if (currCol - 1 >= 0)
+        {
+            if(maze[currRow][currCol - 1] != null)
+                neighbors.add(maze[currRow][currCol - 1]);
+        }
+        if (neighbors.isEmpty())
+            sq.setCharType('.');
         return neighbors;
     }
 

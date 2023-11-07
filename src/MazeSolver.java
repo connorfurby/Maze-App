@@ -70,10 +70,12 @@ public abstract class MazeSolver {
                 ArrayList<Square> borders = theMaze.getNeighbors(move);
                 for (int i = 0; i < borders.size(); i++)
                 {
-                    if (borders.get(i).getType() != 1)
+                    if (borders.get(i).getType() != 1 && !(borders.get(i).isExplored()))
                     {
                         add(borders.get(i));
+                        borders.get(i).setCharType('o');
                         borders.get(i).setPrevious(move);
+                        move.setCharType('.');
                     }
                 }
                 move.setExplored();
@@ -89,6 +91,11 @@ public abstract class MazeSolver {
         while (!isSolved()) 
         {
             step();
+        }
+        
+        while (!(isEmpty()))
+        {
+            next().setCharType('x');
         }
     }
 }
