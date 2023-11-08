@@ -50,6 +50,8 @@ public abstract class MazeSolver {
         else
             return "This Maze has not been solved yet.";
         
+        finished = false;
+        traversed = false;
         return path;
     }
 

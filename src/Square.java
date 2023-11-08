@@ -78,5 +78,7 @@ public class Square {
             chartype = 'S';
         else
             chartype = 'E';
+        explored = false;
+        previous = null;
     }
 }
