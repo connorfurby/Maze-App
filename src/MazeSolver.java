@@ -5,6 +5,7 @@ public abstract class MazeSolver {
     protected static Stack<Square> currPath; // THE PATH THE SOLVER TAKES TO THE FINISH
     protected boolean traversed = false; // BECOMES TRUE ONCE THE ENTIRE MAZE HAS BEEN TRAVERSED OR THE FINISH HAS BEEN FOUND
     protected static Maze theMaze; // MAZE THAT IS BEING SOLVED
+    protected boolean finished = false; // IF THE FINISH HAS BEEN FOUND OR NOT
 
    public MazeSolver(Maze maze)
     {
@@ -17,6 +18,8 @@ public abstract class MazeSolver {
     abstract boolean isEmpty();
     abstract void add(Square sq);
     abstract Square next();
+    abstract Square top();
+    abstract Object getWorklist();
 
 
     public boolean isSolved()
@@ -30,7 +33,7 @@ public abstract class MazeSolver {
         String path = "";
         if (isSolved())
         {
-            if (isEmpty())
+            if (!finished)
                 return "This maze is unsolvable.";
             else 
             {
@@ -39,7 +42,7 @@ public abstract class MazeSolver {
                 {
                     int xcord = backtracked.getRow();
                     int ycord = backtracked.getCol();
-                    path = path + "[" + xcord + "," + ycord + "], ";
+                    path = "[" + xcord + "," + ycord + "], " + path;
                     backtracked = backtracked.getPrevious();
                 }
             }
@@ -55,16 +58,28 @@ public abstract class MazeSolver {
     //MOVES FORWARD A SQUARE
     public Square step()
     {
+        boolean found = false;
         if (isEmpty())
         {
             traversed = true;
+            finished = false;
             return null;
         }
         else
         {
             Square move = next();
             if (move.getType() == 3)
+            {
                 traversed = true;
+                finished = true;
+                Square backtracked = theMaze.getFinish();
+                while (!(backtracked.getRow() == theMaze.getStart().getRow() && backtracked.getCol() == theMaze.getStart().getCol() && backtracked.getType() == theMaze.getStart().getType()))
+                {
+                    if (backtracked.getType() != 2 && backtracked.getType() != 3)
+                        backtracked.setCharType('x');
+                    backtracked = backtracked.getPrevious();
+                }
+            }
             else 
             {
                 ArrayList<Square> borders = theMaze.getNeighbors(move);
@@ -72,13 +87,21 @@ public abstract class MazeSolver {
                 {
                     if (borders.get(i).getType() != 1 && !(borders.get(i).isExplored()))
                     {
+                        found = true;
                         add(borders.get(i));
-                        borders.get(i).setCharType('o');
+                        if (borders.get(i).getType() != 2 && borders.get(i).getType() != 3)
+                            borders.get(i).setCharType('o');
                         borders.get(i).setPrevious(move);
-                        move.setCharType('.');
+                        if (move.getType() != 2 && move.getType() != 3)
+                            move.setCharType('.');
                     }
                 }
                 move.setExplored();
+                if (!found)
+                {
+                    if (move.getType() != 2 && move.getType() != 3)
+                        move.setCharType('.');
+                }
             }
             return move;
         }
@@ -91,11 +114,6 @@ public abstract class MazeSolver {
         while (!isSolved()) 
         {
             step();
-        }
-        
-        while (!(isEmpty()))
-        {
-            next().setCharType('x');
         }
     }
 }

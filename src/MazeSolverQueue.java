@@ -31,4 +31,14 @@ public class MazeSolverQueue extends MazeSolver{
     {
         return ((Square) worklist.dequeue());
     }
+
+    public Square top()
+    {
+        return ((Square) worklist.front());
+    }
+
+    public Object getWorklist()
+    {
+        return worklist;
+    }
 }

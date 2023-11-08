@@ -29,4 +29,14 @@ public class MazeSolverStack extends MazeSolver
         return ((Square) worklist.pop());
     }
 
+    public Square top()
+    {
+        return ((Square) worklist.top());
+    }
+
+    public Object getWorklist()
+    {
+        return worklist;
+    }
+
 }
